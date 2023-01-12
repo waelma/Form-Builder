@@ -6,7 +6,7 @@ const DateComponent = ({champ}) => {
     name={champ.label}
     rules={[{ required: champ.required}]}
   >
-    <DatePicker placeholder={champ.required? champ.label + " *":champ.label} size="large" />
+    <DatePicker placeholder={champ.required? champ.label + " *":champ.label} size="large" format={"DD-MM-YYYY"}/>
   </Form.Item> 
   )
 }
