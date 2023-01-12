@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Space, Typography, Row, Col, Grid, Form } from "antd";
 import InputComponent from "../../components/InputComponent";
 import SelectComponent from "../../components/SelectComponent";
-import { PlusOutlined, SettingOutlined } from "@ant-design/icons";
+import { PlusOutlined, SettingOutlined, EditOutlined } from "@ant-design/icons";
 import CreateChamp from "./CreateChamp";
 import DetailChamp from "./DetailChamp";
 import InputNumberComponent from "../../components/InputNumberComponent";
 import SelectMultipleComponent from "../../components/SelectMultipleComponent";
 import DateComponent from "../../components/DateComponent";
+import EmailInputComponent from "../../components/EmailInputComponent";
+import CINInputComponent from "../../components/CINInputComponent";
+import PhoneInputComponent from "../../components/PhoneInputComponent";
 
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
@@ -56,6 +59,7 @@ const CreateFormComponent = () => {
         editable={{
           onChange:setFormTitle,
           text: formTitle,
+          icon:<EditOutlined style={{width:"20px"}}/>
         }}
         >{formTitle}</Title>
         <Form layout="vertical" form={form} onFinish={()=>{}}>
@@ -72,6 +76,12 @@ const CreateFormComponent = () => {
                   <SelectMultipleComponent champ={item}/>
                   :item.type===2?
                   <DateComponent champ={item}/>
+                  :item.type===5?
+                  <EmailInputComponent champ={item}/>
+                  :item.type===6?
+                  <CINInputComponent champ={item}/>
+                  :item.type===7?
+                  <PhoneInputComponent champ={item}/>
                   :<InputComponent champ={item} />
                 }
               </Col>

@@ -17,6 +17,7 @@ import {
   DatePicker
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import moment from "moment";
 const { Title } = Typography;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -47,6 +48,14 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
       label: "Email",
       id: 5,
     },
+    {
+      label: "CIN",
+      id: 6,
+    },
+    {
+      label: "Telephone",
+      id: 7,
+    },
   ]);
   const [items, setItems] = useState([]);
   const [formules, setFormules] = useState([]);
@@ -55,9 +64,8 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
   const [somme, setSomme]= useState(0)
   const [sommeX, setSommeX]= useState(0)
   const handleSubmit=(values)=>{
-    console.log(values)
     setChamps([...champs,{
-      id:Math.random(),
+      id:moment().valueOf()%1000000,
       label: values.label,
       type: values.type,
       required: values.required===undefined?false:values.required,
@@ -135,13 +143,12 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
          {isTypeSelect&& <Col span={24}>
             <Form.Item label="Liste des items">
             {items.map(item=>
-              <Input.Group compact className="mb-5">
+              <Input.Group compact className="mb-5" key={item.id}>
               <Form.Item noStyle>
-                <Input style={{ width: "62%" }} size="large" placeholder="Item libellé" onChange={(e)=>{
+                <Input style={{ width: "62%" }} size="large" placeholder="Item libellé" onBlur={(e)=>{
                   let aux=items.filter(x=>x.id===item.id)[0]
                   aux.label=e.target.value
                   setItems([...items.filter(x => x.id!==item.id), aux])
-                  console.log(items)
                 }}/>
               </Form.Item>
               <Form.Item noStyle>
@@ -149,11 +156,10 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                   style={{ width: "30%", marginRight:"3%", borderTopRightRadius:"6px", borderBottomRightRadius:"6px" }}
                   placeholder="Poids"
                   size="large"
-                  onChange={(e)=>{
+                  onBlur={(e)=>{
                     let aux=items.filter(x=>x.id===item.id)[0]
-                    aux.poids=e
+                    aux.poids=e.target.value
                     setItems([...items.filter(x => x.id!==item.id), aux])
-                    console.log(items)
                   }}
                 />
               </Form.Item>
@@ -170,7 +176,7 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                   }}
                 />
             </Input.Group>)}
-              <Button className="w-full" type="dashed" onClick={() => {setItems([...items, {id:Math.random(),label:"",poids:""}])}}>
+              <Button className="w-full" type="dashed" onClick={() => {console.log([...items, {id:moment().valueOf()%1000000,label:"",poids:""}]);setItems([...items, {id:moment().valueOf()%1000000,label:"",poids:""}])}}>
               {" "}
               <PlusOutlined /> Ajouter une item{" "}
             </Button>
@@ -190,19 +196,17 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
           <Col span={24}>
             <Form.Item name="formule" label="Formule" className="xxx">
               {formules.map(item=>
-              <Input.Group compact className="mb-5">
+              <Input.Group compact className="mb-5" key={item.id}>
               <Form.Item noStyle>
                 {/* <Input style={{ width: "30%" }} size="large" placeholder="Item libellé" onChange={(e)=>{
                   let aux=formules.filter(x=>x.id===item.id)[0]
                   aux.label=e.target.value
                   setFormules([...formules.filter(x => x.id!==item.id), aux])
-                  console.log(formules)
                 }}/> */}
                 <Select placeholder="Type" size="large" onSelect={(e)=>{
                   let aux=formules.filter(x=>x.id===item.id)[0]
                   aux.type=e
                   setFormules([...formules.filter(x => x.id!==item.id), aux])
-                  console.log(formules)
                 }}>
                 <Option key={0} value={0} label="Inferieure à">
                     Inferieure à
@@ -227,7 +231,6 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                     let aux=formules.filter(x=>x.id===item.id)[0]
                     aux.poids=e
                     setFormules([...formules.filter(x => x.id!==item.id), aux])
-                    console.log(formules)
                   }}
                 />
               </Form.Item>
@@ -245,7 +248,7 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                 />
             </Input.Group>
               )}
-                          <Button className="w-full" type="dashed" onClick={() => {setFormules([...formules, {id:Math.random(),type:0,poids:0}])}}>
+                          <Button className="w-full" type="dashed" onClick={() => {setFormules([...formules, {id:moment().valueOf()%1000000,type:0,poids:0}])}}>
               {" "}
               <PlusOutlined /> Ajouter un formule{" "}
             </Button>

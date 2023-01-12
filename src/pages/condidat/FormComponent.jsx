@@ -5,6 +5,9 @@ import SelectComponent from "../../components/SelectComponent";
 import InputNumberComponent from "../../components/InputNumberComponent";
 import SelectMultipleComponent from "../../components/SelectMultipleComponent";
 import DateComponent from "../../components/DateComponent";
+import EmailInputComponent from "../../components/EmailInputComponent";
+import CINInputComponent from "../../components/CINInputComponent";
+import PhoneInputComponent from "../../components/PhoneInputComponent";
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
 const formData = {
@@ -130,6 +133,12 @@ const FormComponent = () => {
                   <SelectMultipleComponent champ={item}/>
                   :item.type===2?
                   <DateComponent champ={item}/>
+                  :item.type===5?
+                  <EmailInputComponent champ={item}/>
+                  :item.type===6?
+                  <CINInputComponent champ={item}/>
+                  :item.type===7?
+                  <PhoneInputComponent champ={item}/>
                   :<InputComponent champ={item} />
                 }
               </Col>

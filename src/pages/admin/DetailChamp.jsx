@@ -16,6 +16,7 @@ import {
   Statistic,
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import moment from "moment";
 const { Title } = Typography;
 const { Option } = Select;
 const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) => {
@@ -149,7 +150,7 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
             <Col span={24}>
               <Form.Item label="Liste des items">
                 {items.map((item) => (
-                  <Input.Group compact className="mb-5">
+                  <Input.Group compact className="mb-5" key={item.id}>
                     <Form.Item noStyle>
                       <Input
                         style={{ width: "62%" }}
@@ -211,7 +212,7 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
                   onClick={() => {
                     setItems([
                       ...items,
-                      { id: Math.random(), label: "", poids: "" },
+                      { id: moment().valueOf()%1000000, label: "", poids: "" },
                     ]);
                   }}
                 >
