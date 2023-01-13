@@ -8,6 +8,8 @@ import DateComponent from "../../components/DateComponent";
 import EmailInputComponent from "../../components/EmailInputComponent";
 import CINInputComponent from "../../components/CINInputComponent";
 import PhoneInputComponent from "../../components/PhoneInputComponent";
+import { useParams } from "react-router";
+import axios from "axios";
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
 const formData = {
@@ -34,6 +36,20 @@ const formData = {
       type: 5,
       required: true,
       poids: 20,
+    },
+    {
+      id: 52,
+      label: "CIN",
+      type: 6,
+      required: true,
+      poids: 10,
+    },
+    {
+      id: 44,
+      label: "Téléphone",
+      type: 7,
+      required: true,
+      poids: 10,
     },
     {
       id: 3,
@@ -105,9 +121,10 @@ const formData = {
   ],
 };
 const FormComponent = () => {
+  const { id } = useParams();
   const [form] = Form.useForm();
   const screens = useBreakpoint();
-  const [data, setData] = useState(formData);
+  const [data, setData] = useState();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   React.useEffect(() => {
     const handleWindowResize = () => {
@@ -116,28 +133,39 @@ const FormComponent = () => {
     window.addEventListener("resize", handleWindowResize);
     return () => window.removeEventListener("resize", handleWindowResize);
   }, [screens]);
+  useEffect(()=>{
+    axios
+    .get(`http://localhost:8000/api/test/${id}`)
+    .then((response) => {
+        setData(response.data[0]);
+        console.log(response.data)
+      }
+    )
+    .catch(() => {
+    });
+  },[])
   return (
     <div className="flex justify-center mt-10">
-      <Card style={{ width: windowWidth > 750 ? 620 : "90%" }}>
-        <Title level={3}>{data.title}</Title>
+{   data&&   <Card style={{ width: windowWidth > 750 ? 620 : "90%" }}>
+        <Title level={3}>{data.label}</Title>
         <Form layout="vertical" form={form} onFinish={() => {}}>
           <Row gutter={[16]}>
             {data.champs.map((item) => (
               <Col span={24}>
                 {
-                  item.type===3?
+                  item.type_id===3?
                   <SelectComponent champ={item} />
-                  :item.type===1?
+                  :item.type_id===1?
                   <InputNumberComponent champ={item} />
-                  :item.type===4?
+                  :item.type_id===4?
                   <SelectMultipleComponent champ={item}/>
-                  :item.type===2?
+                  :item.type_id===2?
                   <DateComponent champ={item}/>
-                  :item.type===5?
+                  :item.type_id===5?
                   <EmailInputComponent champ={item}/>
-                  :item.type===6?
+                  :item.type_id===6?
                   <CINInputComponent champ={item}/>
-                  :item.type===7?
+                  :item.type_id===7?
                   <PhoneInputComponent champ={item}/>
                   :<InputComponent champ={item} />
                 }
@@ -154,7 +182,7 @@ const FormComponent = () => {
             </Col>
           </Row>
         </Form>
-      </Card>
+      </Card>}
     </div>
   );
 };

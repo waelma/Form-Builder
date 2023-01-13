@@ -300,7 +300,7 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                               let aux = formules.filter(
                                 (x) => x.id === item.id
                               )[0];
-                              aux.date = dateString;
+                              aux.date = dateString[0]+'-'+dateString[1];
                               setFormules([
                                 ...formules.filter((x) => x.id !== item.id),
                                 aux,

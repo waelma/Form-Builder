@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
     <Routes>
     <Route path={`*`} element={<CreateFormComponent/>} />
-    <Route path={`affiche-form`} element={<FormComponent/>} />
+    <Route path={`affiche-form/:id`} element={<FormComponent/>} />
     </Routes>
   </BrowserRouter>
   </ConfigProvider>

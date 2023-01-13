@@ -11,6 +11,7 @@ import DateComponent from "../../components/DateComponent";
 import EmailInputComponent from "../../components/EmailInputComponent";
 import CINInputComponent from "../../components/CINInputComponent";
 import PhoneInputComponent from "../../components/PhoneInputComponent";
+import axios from "axios";
 
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
@@ -45,6 +46,16 @@ const CreateFormComponent = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [champ, setChamp] = useState({})
   const [formTitle, setFormTitle] = useState("Form")
+  const handleCreateForm=()=>{
+    axios
+    .post(`http://localhost:8000/api/test`,{label:formTitle,champs:champs})
+    .then((response) => {
+        console.log(response.data);
+      }
+    )
+    .catch(() => {
+    });
+  }
   React.useEffect(() => {
     const handleWindowResize = () => {
       setWindowWidth(window.innerWidth);
@@ -55,6 +66,7 @@ const CreateFormComponent = () => {
   return (
     <div className="flex justify-center mt-10">
       <Card style={{ width: windowWidth > 750 ? 620 : "90%" }}>
+      <Button onClick={handleCreateForm} className="mb-5" > Enregitrer </Button>
         <Title level={3} className="hey"
         editable={{
           onChange:setFormTitle,

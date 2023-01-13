@@ -1,0 +1,128 @@
+{
+    "title": "Form",
+   "champs": [
+     {
+       "id": 0,
+       "label": "Nom",
+       "type": 0,
+       "required": true,
+       "poids": 10
+     },
+     {
+       "id": 1,
+       "label": "Prenom",
+       "type": 0,
+       "required": true,
+       "poids": 10
+     },
+     {
+       "id": 2,
+       "label": "Email",
+       "type": 5,
+       "required": true,
+       "poids": 20
+     },
+     {
+       "id": 52,
+       "label": "CIN",
+       "type": 6,
+       "required": true,
+       "poids": 10
+     },
+     {
+       "id": 44,
+       "label": "Téléphone",
+       "type": 7,
+       "required": true,
+       "poids": 10
+     },
+     {
+       "id": 3,
+       "label": "Select",
+       "type": 3,
+       "required": true,
+       "poids": 10,
+       "items":[
+         {
+             "id":0,
+             "label":"item1",
+             "poids":10
+         },
+         {
+             "id":1,
+             "label":"item2",
+             "poids":15
+         },
+         {
+             "id":2,
+             "label":"item3",
+             "poids":10
+         }
+       ]
+     },
+     {
+       "id": 4,
+       "label": "Select multiple",
+       "type": 4,
+       "required": false,
+       "poids": 10,
+       "items":[
+         {
+             "id":0,
+             "label":"item1",
+             "poids":10
+         },
+         {
+             "id":1,
+             "label":"item2",
+             "poids":15
+         },
+         {
+             "id":2,
+             "label":"item3",
+             "poids":10
+         },
+         {
+             "id":3,
+             "label":"item4",
+             "poids":10
+         }
+       ]
+     },
+     {
+       "id": 5,
+       "label": "Date",
+       "type": 2,
+       "required": true,
+       "poids": 20,
+       "formules":[
+        {
+            "id":0,
+            "type":0,
+            "poids":10,
+            "reference":"2015"
+        },
+        {
+            "id":0,
+            "type":1,
+            "poids":30,
+            "reference":"2015-2020"
+        },
+        {
+            "id":0,
+            "type":2,
+            "poids":50,
+            "reference":"2020"
+        }
+      ]
+
+     },
+     {
+       "id": 6,
+       "label": "Note",
+       "type": 1,
+       "required": true,
+       "poids": 20
+     }
+   ]
+ }
