@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Space, Typography, Row, Col, Grid, Form } from "antd";
+import { Button, Card, Space, Typography, Row, Col, Grid, Form, Alert } from "antd";
 import InputComponent from "../../components/InputComponent";
 import SelectComponent from "../../components/SelectComponent";
-import { PlusOutlined, SettingOutlined, EditOutlined } from "@ant-design/icons";
+import { PlusOutlined, SettingOutlined, EditOutlined, SaveOutlined } from "@ant-design/icons";
 import CreateChamp from "./CreateChamp";
 import DetailChamp from "./DetailChamp";
 import InputNumberComponent from "../../components/InputNumberComponent";
@@ -46,15 +46,31 @@ const CreateFormComponent = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [champ, setChamp] = useState({})
   const [formTitle, setFormTitle] = useState("Form")
+  const [alert, setAlert] = useState(false)
   const handleCreateForm=()=>{
-    axios
-    .post(`http://localhost:8000/api/test`,{label:formTitle,champs:champs})
-    .then((response) => {
-        console.log(response.data);
-      }
-    )
-    .catch(() => {
-    });
+      let s = 0;
+      champs.map((item) => {
+        s += item.poids;
+      });
+    if(s===100){
+      axios
+      .post(`http://localhost:8000/api/test`,{label:formTitle,champs:champs})
+      .then((response) => {
+          console.log(response.data);
+        }
+      )
+      .catch(() => {
+      });
+    }else{
+      handleAlert()
+    }
+
+  }
+  const handleAlert=()=>{
+    setAlert(true)
+    setTimeout(() => {
+      setAlert(false)
+    }, 8000);
   }
   React.useEffect(() => {
     const handleWindowResize = () => {
@@ -66,7 +82,8 @@ const CreateFormComponent = () => {
   return (
     <div className="flex justify-center mt-10">
       <Card style={{ width: windowWidth > 750 ? 620 : "90%" }}>
-      <Button onClick={handleCreateForm} className="mb-5" > Enregitrer </Button>
+      <Button onClick={handleCreateForm} className="mb-5" icon={<SaveOutlined />} > Enregitrer </Button>
+      {alert&&<Alert message="La somme de poids doit être égale à 100" type="warning" className="mb-5" />}
         <Title level={3} className="hey"
         editable={{
           onChange:setFormTitle,

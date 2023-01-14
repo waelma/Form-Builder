@@ -126,6 +126,18 @@ const FormComponent = () => {
   const screens = useBreakpoint();
   const [data, setData] = useState();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [values, setValues] = useState([])
+  const handleSubmit=()=>{
+    console.log(values)
+    axios
+    .post(`http://localhost:8000/api/calcul-resultat/${id}`,values)
+    .then((response) => {
+        console.log(response.data)
+      }
+    )
+    .catch(() => {
+    });
+  }
   React.useEffect(() => {
     const handleWindowResize = () => {
       setWindowWidth(window.innerWidth);
@@ -138,7 +150,7 @@ const FormComponent = () => {
     .get(`http://localhost:8000/api/test/${id}`)
     .then((response) => {
         setData(response.data[0]);
-        console.log(response.data)
+        console.log(response.data)        
       }
     )
     .catch(() => {
@@ -148,30 +160,31 @@ const FormComponent = () => {
     <div className="flex justify-center mt-10">
 {   data&&   <Card style={{ width: windowWidth > 750 ? 620 : "90%" }}>
         <Title level={3}>{data.label}</Title>
-        <Form layout="vertical" form={form} onFinish={() => {}}>
+        <Form layout="vertical" form={form} onFinish={handleSubmit}>
           <Row gutter={[16]}>
             {data.champs.map((item) => (
               <Col span={24}>
                 {
                   item.type_id===3?
-                  <SelectComponent champ={item} />
+                  <SelectComponent champ={item} values={values} setValues={setValues}/>
                   :item.type_id===1?
-                  <InputNumberComponent champ={item} />
+                  <InputNumberComponent champ={item} values={values} setValues={setValues}/>
                   :item.type_id===4?
-                  <SelectMultipleComponent champ={item}/>
+                  <SelectMultipleComponent champ={item} values={values} setValues={setValues}/>
                   :item.type_id===2?
-                  <DateComponent champ={item}/>
+                  <DateComponent champ={item} values={values} setValues={setValues}/>
                   :item.type_id===5?
-                  <EmailInputComponent champ={item}/>
+                  <EmailInputComponent champ={item} values={values} setValues={setValues}/>
                   :item.type_id===6?
-                  <CINInputComponent champ={item}/>
+                  <CINInputComponent champ={item} values={values} setValues={setValues}/>
                   :item.type_id===7?
-                  <PhoneInputComponent champ={item}/>
-                  :<InputComponent champ={item} />
+                  <PhoneInputComponent champ={item} values={values} setValues={setValues}/>
+                  :<InputComponent champ={item} values={values} setValues={setValues}/>
                 }
               </Col>
           ))}
             <Col className="text-right" span={24}>
+            <Form.Item >
               <Space>
                 <Button htmlType="reset"> Annuler </Button>
                 <Button type="primary" htmlType="submit">
@@ -179,6 +192,7 @@ const FormComponent = () => {
                   Envoyer{" "}
                 </Button>
               </Space>
+              </Form.Item>
             </Col>
           </Row>
         </Form>

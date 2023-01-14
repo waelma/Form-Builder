@@ -14,9 +14,12 @@ import {
   Divider,
   Switch,
   Statistic,
+  DatePicker,
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import dayjs from 'dayjs';
 import moment from "moment";
+const { RangePicker } = DatePicker;
 const { Title } = Typography;
 const { Option } = Select;
 const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) => {
@@ -47,13 +50,8 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
       id: 5,
     },
   ]);
-  const [items, setItems] = useState([
-    {
-      id: 0,
-      label: "",
-      poids: 0,
-    },
-  ]);
+  const [items, setItems] = useState([]);
+  const [formules, setFormules] = useState([]);
   const [isTypeSelect, setIsTypeSelect] = useState(false);
   const [isTypeDate,setIsTypeDate] = useState(false);
   const [somme, setSomme]= useState(0)
@@ -62,6 +60,7 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
   useEffect(() => {
     if(isModalOpen){
         setIsTypeSelect(champ.type===3 || champ.type===4)
+        setIsTypeDate(champ.type===2)
         setSomme(0)
         let s=0
       champs.map((item)=> {
@@ -70,6 +69,7 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
        setSomme(s)
        setSommeX(s)
     setItems(champ.items)
+    setFormules(champ.formules)
     form.setFields([
       {
         name: ["label"],
@@ -95,13 +95,13 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
       open={isModalOpen}
       okText="Modifier"
       onOk={() => {
-        form.resetFields();
-        setItems([{}])
+        // form.resetFields();
+        // setItems([])
       }}
       onCancel={() => {
-        form.resetFields();
+        // form.resetFields();
         setIsModalOpen(false);
-        setItems([{}])
+        // setItems([])
       }}
       footer={[
         <Button key="back" onClick={()=>{setChamps(champs.filter(item=>item.id!==champ.id)); setIsModalOpen(false)}} danger>
@@ -227,27 +227,131 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
               <Switch />
             </Form.Item>
           </Col>
-          {isTypeDate&&
+          {isTypeDate && (
             <>
-          <Divider />
-          <Title level={4} className="ml-2">
-            Formule
-          </Title>
-          <Col span={24}>
-            <Form.Item name="formule" label="Formule">
-              <Input
-                placeholder="Veuillez entrer la référence de prolongation"
-                size="large"
-              />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-            <Button className="w-full" type="dashed" onClick={() => {}}>
-              {" "}
-              <PlusOutlined /> Ajouter un formule{" "}
-            </Button>
-          </Col>
-         </>} 
+              <Divider />
+              <Title level={4} className="ml-2">
+                Formule
+              </Title>
+              <Col span={24}>
+                <Form.Item name="formule" label="Formule" className="xxx">
+                  {formules.map((item) => (
+                    <Input.Group compact className="mb-5" key={item.id}>
+                      <Form.Item noStyle>
+                        <Select
+                          placeholder="Type"
+                          size="large"
+                          onSelect={(e) => {
+                            let aux = formules.filter(
+                              (x) => x.id === item.id
+                            )[0];
+                            aux.type = e;
+                            setFormules([
+                              ...formules.filter((x) => x.id !== item.id),
+                              aux,
+                            ]);
+                          }}
+                          defaultValue={item.type}
+                        >
+                          <Option key={0} value={0} label="Inferieure à">
+                            Inferieure à
+                          </Option>
+                          <Option key={1} value={1} label="Superieur à">
+                            Superieur à
+                          </Option>
+                          <Option key={2} value={2} label="Entre">
+                            Entre
+                          </Option>
+                        </Select>
+                      </Form.Item>
+                      <Form.Item noStyle>
+                        {item.type === 2 ? (
+                          <RangePicker
+                            picker="year"
+                            size="large"
+                            defaultValue={item.date&&[dayjs(item.date.substring(0, 4), 'YYYY'), dayjs(item.date.substring(5, 9), 'YYYY')]}
+                            onChange={(value, dateString) => {
+                              let aux = formules.filter(
+                                (x) => x.id === item.id
+                              )[0];
+                              aux.date = dateString[0]+'-'+dateString[1];
+                              setFormules([
+                                ...formules.filter((x) => x.id !== item.id),
+                                aux,
+                              ]);
+                            }}
+                          />
+                        ) : (
+                          <DatePicker picker="year" size="large"
+                          defaultValue={item.date&&dayjs(item.date, 'YYYY')}
+                          onChange={(value, dateString) => {
+                            let aux = formules.filter(
+                              (x) => x.id === item.id
+                            )[0];
+                            aux.date = dateString;
+                            setFormules([
+                              ...formules.filter((x) => x.id !== item.id),
+                              aux,
+                            ]);
+                          }} />
+                        )}
+                      </Form.Item>
+                      <Form.Item noStyle>
+                        <InputNumber
+                        defaultValue={item.poids}
+                          style={{
+                            width: "20%",
+                            marginRight: "3%",
+                            borderTopRightRadius: "6px",
+                            borderBottomRightRadius: "6px",
+                          }}
+                          placeholder="Poids"
+                          size="large"
+                          onChange={(e) => {
+                            let aux = formules.filter(
+                              (x) => x.id === item.id
+                            )[0];
+                            aux.poids = e;
+                            setFormules([
+                              ...formules.filter((x) => x.id !== item.id),
+                              aux,
+                            ]);
+                          }}
+                        />
+                      </Form.Item>
+                      <MinusCircleOutlined
+                        className="dynamic-delete-button"
+                        onClick={() => {
+                          setFormules(formules.filter((x) => x.id !== item.id));
+                        }}
+                        style={{
+                          fontSize: "18px",
+                          margin: "0",
+                          position: "absolute",
+                          top: "50%",
+                          msTransform: "translateY(-50%)",
+                          transform: "translateY(-50%)",
+                        }}
+                      />
+                    </Input.Group>
+                  ))}
+                  <Button
+                    className="w-full"
+                    type="dashed"
+                    onClick={() => {
+                      setFormules([
+                        ...formules,
+                        { id: moment().valueOf() % 1000000},
+                      ]);
+                    }}
+                  >
+                    {" "}
+                    <PlusOutlined /> Ajouter un formule{" "}
+                  </Button>
+                </Form.Item>
+              </Col>
+            </>
+          )}
           <Divider />
           <Title level={4} className="ml-2">
             Poids
@@ -267,7 +371,7 @@ const DetailChamp = ({ isModalOpen, setIsModalOpen, champ, champs, setChamps }) 
                 </Space>
               }
             >
-              <InputNumber placeholder="Poids" size="large" onChange={(e)=>setSommeX(somme+e)}/>
+              <InputNumber placeholder="Poids" size="large" onChange={(e)=>setSommeX(somme-champ.poids+e)}/>
             </Form.Item>
           </Col>
         </Row>
