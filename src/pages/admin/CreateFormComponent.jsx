@@ -12,40 +12,48 @@ import EmailInputComponent from "../../components/EmailInputComponent";
 import CINInputComponent from "../../components/CINInputComponent";
 import PhoneInputComponent from "../../components/PhoneInputComponent";
 import axios from "axios";
-
+import TextAreaComponent from "../../components/TextAreaComponent";
+import { useTranslation } from "react-i18next";
 const { useBreakpoint } = Grid;
 const { Title } = Typography;
 const CreateFormComponent = () => {
+  const {t} = useTranslation();
   const [form] = Form.useForm();
   const screens = useBreakpoint();
   const [champs, setChamps] = useState([
     {
       id:0,
-      label: "Nom",
+      label: localStorage.getItem('lang')==="fr"?"prenom":localStorage.getItem('lang')==="ar"?"الإ سم":"first name",
       type: 0,
       required: true,
       poids:10,
+      items:[],
+      formules:[]
     },
     {
       id:1,
-      label: "Prenom",
+      label: localStorage.getItem('lang')==="fr"?"nom":localStorage.getItem('lang')==="ar"?"اللقب":"Last name",
       type: 0,
       required: true,
       poids:10,
+      items:[],
+      formules:[]
     },
     {
       id:2,
-      label: "Email",
+      label: localStorage.getItem('lang')==="fr"?"Email":localStorage.getItem('lang')==="ar"?"البريد إلكتروني":"Email",
       type: 5,
       required: true,
       poids:20,
+      items:[],
+      formules:[]
     },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [champ, setChamp] = useState({})
-  const [formTitle, setFormTitle] = useState("Form")
+  const [formTitle, setFormTitle] = useState(localStorage.getItem('lang')==="fr"?"Titre de formulaire":localStorage.getItem('lang')==="ar"?"عنوان الإستمارة":"Form title")
   const [alert, setAlert] = useState(false)
   const handleCreateForm=()=>{
       let s = 0;
@@ -82,8 +90,8 @@ const CreateFormComponent = () => {
   return (
     <div className="flex justify-center mt-10">
       <Card style={{ width: windowWidth > 750 ? 620 : "90%" }}>
-      <Button onClick={handleCreateForm} className="mb-5" icon={<SaveOutlined />} > Enregitrer </Button>
-      {alert&&<Alert message="La somme de poids doit être égale à 100" type="warning" className="mb-5" />}
+      <Button onClick={handleCreateForm} className="mb-5" icon={<SaveOutlined />} > {t('Enregistrer.1')} </Button>
+      {alert&&<Alert message={<>{t('Alert message.1')}</>} type="warning" className="mb-5" />}
         <Title level={3} className="hey"
         editable={{
           onChange:setFormTitle,
@@ -111,6 +119,8 @@ const CreateFormComponent = () => {
                   <CINInputComponent champ={item}/>
                   :item.type===7?
                   <PhoneInputComponent champ={item}/>
+                  :item.type===8?
+                  <TextAreaComponent champ={item}/>
                   :<InputComponent champ={item} />
                 }
               </Col>
@@ -136,13 +146,13 @@ const CreateFormComponent = () => {
               onClick={() => setIsModalOpen(true)}
             >
               {" "}
-              <PlusOutlined /> Ajouter un champ{" "}
+              <PlusOutlined /> {t('Ajouter un champ.1')}{" "}
             </Button>
           </Col>
           <Col className="text-right" span={24}>
             <Space>
-              <Button> Annuler </Button>
-              <Button type="primary" htmlType="submit"> Envoyer </Button>
+              <Button> {t('Annuler.1')} </Button>
+              <Button type="primary" htmlType="submit"> {t('Envoyer.1')} </Button>
             </Space>
           </Col>
         </Row>

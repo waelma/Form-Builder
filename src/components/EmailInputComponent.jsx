@@ -2,7 +2,7 @@ import React from 'react'
 import { Input, Form } from 'antd'
 const EmailInputComponent = ({ champ, values, setValues }) => {
   return (
-    <Form.Item name={champ.label} rules={[{ required: true, type: 'email' }]}>
+    <Form.Item name={champ.label} rules={[{ required: champ.required, type: 'email' }]}>
       <Input
         placeholder={champ.required ? champ.label + ' *' : champ.label}
         size="large"

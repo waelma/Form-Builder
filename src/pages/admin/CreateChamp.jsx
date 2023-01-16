@@ -18,10 +18,13 @@ import {
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import moment from "moment";
+import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 const { Title } = Typography;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
+  const {t} = useTranslation();
   const [form] = Form.useForm();
   const [fieldType, setFieldType] = useState([
     {
@@ -55,6 +58,10 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
     {
       label: "Téléphone",
       id: 7,
+    },
+    {
+      label: "Text Area",
+      id: 8,
     },
   ]);
   const [items, setItems] = useState([]);
@@ -104,9 +111,10 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
   }, [isModalOpen]);
   return (
     <Modal
-      title={<Title level={4}>Nouveau Champ</Title>}
+      title={<Title level={4}>{t('Nouveau champ.1')}</Title>}
       open={isModalOpen}
-      okText="Ajouter"
+      okText={<>{t('Ajouter.1')}</>}
+      cancelText={<>{t('Annuler.1')}</>}
       onOk={() => {
         form
           .validateFields()
@@ -135,21 +143,21 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
       >
         <Row gutter={16} style={{ width: "100%" }}>
           <Title level={4} className="ml-2">
-            Informations
+            {t('Informations.1')}
           </Title>
           <Col span={24}>
             <Form.Item
               name="label"
-              label="Libellé"
+              label={<>{t('Libellé.1')}</>}
               rules={[{ required: true }]}
             >
-              <Input placeholder="Libellé" size="large" />
+              <Input placeholder={t('Libellé.1')} size="large" />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item name="type" label="Type" rules={[{ required: true }]}>
+            <Form.Item name="type" label={t('Type.1')} rules={[{ required: true }]}>
               <Select
-                placeholder="Type"
+                placeholder={<>{t('Type.1')}</>}
                 size="large"
                 onSelect={(e) => {
                   e === 3 || e === 4
@@ -168,14 +176,14 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
           </Col>
           {isTypeSelect && (
             <Col span={24}>
-              <Form.Item label="Liste des items">
+              <Form.Item label={t('Liste des items.1')}>
                 {items.map((item) => (
                   <Input.Group compact className="mb-5" key={item.id}>
                     <Form.Item noStyle>
                       <Input
                         style={{ width: "62%" }}
                         size="large"
-                        placeholder="Item libellé"
+                        placeholder={t('item libellé.1')}
                         onBlur={(e) => {
                           let aux = items.filter((x) => x.id === item.id)[0];
                           aux.label = e.target.value;
@@ -194,7 +202,7 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                           borderTopRightRadius: "6px",
                           borderBottomRightRadius: "6px",
                         }}
-                        placeholder="Poids"
+                        placeholder={t("Poids.1")}
                         size="large"
                         onBlur={(e) => {
                           let aux = items.filter((x) => x.id === item.id)[0];
@@ -204,6 +212,8 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                             aux,
                           ]);
                         }}
+                        min={0}
+                        max={100}
                       />
                     </Form.Item>
                     <MinusCircleOutlined
@@ -226,14 +236,6 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                   className="w-full"
                   type="dashed"
                   onClick={() => {
-                    console.log([
-                      ...items,
-                      {
-                        id: moment().valueOf() % 1000000,
-                        label: "",
-                        poids: "",
-                      },
-                    ]);
                     setItems([
                       ...items,
                       {
@@ -245,13 +247,13 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                   }}
                 >
                   {" "}
-                  <PlusOutlined /> Ajouter une item{" "}
+                  <PlusOutlined /> {t('Ajouter une item.1')}{" "}
                 </Button>
               </Form.Item>
             </Col>
           )}
           <Col span={24}>
-            <Form.Item label="Required" name="required" valuePropName="checked">
+            <Form.Item label={<>{t('Required.1')}</>} name="required" valuePropName="checked">
               <Switch />
             </Form.Item>
           </Col>
@@ -259,15 +261,15 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
             <>
               <Divider />
               <Title level={4} className="ml-2">
-                Formule
+                {t('Formule.1')}
               </Title>
               <Col span={24}>
-                <Form.Item name="formule" label="Formule" className="xxx">
+                <Form.Item name="formule" label={t('Formule.1')} className="xxx">
                   {formules.map((item) => (
                     <Input.Group compact className="mb-5" key={item.id}>
                       <Form.Item noStyle>
                         <Select
-                          placeholder="Type"
+                          placeholder={t("Type.1")}
                           size="large"
                           onSelect={(e) => {
                             let aux = formules.filter(
@@ -329,7 +331,7 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                             borderTopRightRadius: "6px",
                             borderBottomRightRadius: "6px",
                           }}
-                          placeholder="Poids"
+                          placeholder={t("Poids.1")}
                           size="large"
                           onChange={(e) => {
                             let aux = formules.filter(
@@ -341,6 +343,8 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                               aux,
                             ]);
                           }}
+                          min={0}
+                          max={100}
                         />
                       </Form.Item>
                       <MinusCircleOutlined
@@ -370,7 +374,7 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
                     }}
                   >
                     {" "}
-                    <PlusOutlined /> Ajouter un formule{" "}
+                    <PlusOutlined /> {t('Ajouter un formule.1')}{" "}
                   </Button>
                 </Form.Item>
               </Col>
@@ -378,15 +382,15 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
           )}
           <Divider />
           <Title level={4} className="ml-2">
-            Poids
+            {t('Poids.1')}
           </Title>
           <Col span={24}>
             <Form.Item
               name="poids"
-              label="Poids"
+              label={t('Poids.1')}
               extra={
                 <Space>
-                  La somme des poids actuelle est
+                  {t('La somme des poids actuelle est.1')}
                   <Statistic
                     value={sommeX}
                     precision={1}
@@ -399,9 +403,11 @@ const CreateChamp = ({ isModalOpen, setIsModalOpen, champs, setChamps }) => {
               }
             >
               <InputNumber
-                placeholder="Poids"
+                placeholder={t('Poids.1')}
                 size="large"
                 onChange={(e) => setSommeX(somme + e)}
+                min={0}
+                max={100}
               />
             </Form.Item>
           </Col>

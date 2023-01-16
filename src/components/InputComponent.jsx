@@ -2,7 +2,7 @@ import React from 'react'
 import { Input, Form } from 'antd'
 const InputComponent = ({ champ, values, setValues }) => {
   return (
-    <Form.Item name={champ.label} rules={[{ required: true }]}>
+    <Form.Item name={champ.label} rules={[{ required: champ.required }]}>
       <Input
         placeholder={champ.required ? champ.label + ' *' : champ.label}
         size="large"

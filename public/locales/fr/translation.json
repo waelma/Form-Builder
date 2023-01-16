@@ -1,0 +1,66 @@
+{
+    "Enregistrer": {
+        "1": "Enregistrer"
+    },
+    "Envoyer": {
+        "1": "Envoyer"
+    },
+    "Annuler":{
+        "1":"Annuler"
+    },
+    "Ajouter un champ":{
+        "1":"Ajouter un champ"
+    },
+    "Alert message":{
+        "1":"La somme de poids doit être égale à 100"
+    },
+    "Nouveau champ":{
+        "1":"Nouveau Champ"
+    },
+    "Informations":{
+        "1":"Informations"
+    },
+    "Libellé":{
+        "1":"Libellé"
+    },
+    "Ajouter":{
+        "1":"Ajouter"
+    },
+    "Type":{
+        "1":"Type"
+    },
+    "Required":{
+        "1":"Obligatoire"
+    },
+    "Poids":{
+        "1":"Poids"
+    },
+    "La somme des poids actuelle est":{
+        "1":"La somme des poids actuelle est"
+    },
+    "Liste des items":{
+        "1":"Liste des items"
+    },
+    "Ajouter une item":{
+        "1":"Ajouter une item"
+    },
+    "item libellé":{
+        "1":"Item libellé"
+    },
+    "Formule":{
+        "1":"Formule"
+    },
+    "Ajouter un formule":{
+        "1":"Ajouter un formule"
+    },
+    "Modifier Champ":{
+        "1":"Modifier Champ"
+    },
+    "Modifier":{
+        "1":"Modifier"
+    },
+    "Supprimer":{
+        "1":"Supprimer"
+    }
+
+}

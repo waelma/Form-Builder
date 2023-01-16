@@ -1,0 +1,65 @@
+{
+    "Enregistrer": {
+        "1": "Save"
+    },
+    "Envoyer": {
+        "1": "Submit"
+    },
+    "Annuler":{
+        "1":"Reset"
+    },
+    "Ajouter un champ":{
+        "1":"Add a field"
+    },
+    "Alert message":{
+        "1":"The sum of weights must be equal to 100"
+    },
+    "Nouveau champ":{
+        "1":"New Field"
+    },
+    "Informations":{
+        "1":"Information"
+    },
+    "Libellé":{
+        "1":"Field name"
+    },
+    "Ajouter":{
+        "1":"Add"
+    },
+    "Type":{
+        "1":"Type"
+    },
+    "Required":{
+        "1":"Required"
+    },
+    "Liste des items":{
+        "1":"List of items"
+    },
+    "Ajouter une item":{
+        "1":"Add item"
+    },
+    "item libellé":{
+        "1":"Item name"
+    },
+    "Formule":{
+        "1":"Equation"
+    },
+    "Ajouter un formule":{
+        "1":"Add equation"
+    },
+    "Modifier Champ":{
+        "1":"Edit Field"
+    },
+    "Modifier":{
+        "1":"Edit"
+    },
+    "Supprimer":{
+        "1":"Remove"
+    },
+    "Poids":{
+        "1":"Weight"
+    },
+    "La somme des poids actuelle est":{
+        "1":"The amount of weights is equal to"
+    }
+}

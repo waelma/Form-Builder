@@ -5,12 +5,12 @@ const CINInputComponent = ({ champ, values, setValues }) => {
     <Form.Item
       name={champ.label}
       rules={[
-        { required: true },
+        { required: champ.required },
         () => ({
           validator(_, e) {
-            if (
-              e.replaceAll(' ', '').length === 8 &&
-              parseInt(e.replaceAll(' ', ''))
+            if ((champ.required===0 && e.length===0)||
+              (e.replaceAll(' ', '').length === 8 &&
+              parseInt(e.replaceAll(' ', '')))
             ) {
               return Promise.resolve()
             }

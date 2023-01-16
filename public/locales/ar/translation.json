@@ -1,0 +1,65 @@
+{
+    "Enregistrer": {
+        "1": "تسجيل"
+    },
+    "Envoyer": {
+        "1": "إرسال"
+    },
+    "Annuler":{
+        "1":"إلغاء"
+    },
+    "Ajouter un champ":{
+        "1":"أضف حقلاً"
+    },
+    "Alert message":{
+        "1":"يجب أن يساوي مجموع الأوزان 100"
+    },
+    "Nouveau champ":{
+        "1":"حقل جديد"
+    },
+    "Informations":{
+        "1":"معلومات"
+    },
+    "Libellé":{
+        "1":"اسم الحقل"
+    },
+    "Ajouter":{
+        "1":"أضف"
+    },
+    "Type":{
+        "1":"نوع الحقل"
+    },
+    "Required":{
+        "1":"واجب"
+    },
+    "Poids":{
+        "1":"الوزن"
+    },
+    "La somme des poids actuelle est":{
+        "1":"مجموع الأوزان الحالية هو"
+    },
+    "Liste des items":{
+        "1":"القائمة"
+    },
+    "Ajouter une item":{
+        "1":"اضافة عنصر"
+    },
+    "item libellé":{
+        "1":"اسم العنصر"
+    },
+    "Formule":{
+        "1":"معادلة"
+    },
+    "Ajouter un formule":{
+        "1":"أضف معادلة"
+    },
+    "Modifier Champ":{
+        "1":"تعديل الحقل"
+    },
+    "Modifier":{
+        "1":"تعديل"
+    },
+    "Supprimer":{
+        "1":"إزالة"
+    }
+}
